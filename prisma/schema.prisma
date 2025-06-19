@@ -1,0 +1,134 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String      @id @default(ulid())
+  name        String
+  username    String      @unique
+  password    String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model Car {
+  id          String      @id @default(ulid())
+  name        String
+  description String
+  slug        String      @unique
+  page        String
+  createdAt   DateTime    @default(now())
+  deletedAt   DateTime?
+
+  variants    Variant[]
+  mediaFiles  MediaFile[]
+  tags        CarTag[]  
+  carPromos   CarPromo[] 
+  testimonis  Testimoni[]     
+}
+
+model Variant {
+  id          String      @id @default(ulid())
+  name        String
+  price       BigInt
+  carId       String
+  createdAt DateTime      @default(now())
+  deletedAt DateTime?
+
+  cars        Car           @relation(fields: [carId], references: [id], onDelete: Cascade)
+}
+
+model Tag {
+  id          String      @id @default(ulid())
+  name        String
+  slug        String      @unique
+  createdAt   DateTime    @default(now())
+  deletedAt   DateTime?
+
+  cars        CarTag[]
+}
+
+model Promo {
+  id          String      @id @default(ulid())
+  name       String
+  page        String
+  slug        String      @unique
+  mediaUrl    String
+  mediaType   MediaType   
+  startDate   DateTime
+  endDate     DateTime
+  isGlobal    Boolean      @default(false)
+  createdAt   DateTime    @default(now())
+  deletedAt   DateTime?
+
+  carPromos   CarPromo[]
+}
+
+model Testimoni {
+  id        String   @id @default(ulid())
+  name      String
+  message   String
+  imageUrl  String?
+  carId     String?   // optional foreign key
+  car       Car?      @relation(fields: [carId], references: [id])
+  createdAt DateTime  @default(now())
+  deletedAt DateTime?
+}
+
+model MediaFile {
+  id        String    @id @default(ulid())
+  carId     String
+  car       Car       @relation(fields: [carId], references: [id])
+  type      MediaType
+  url       String
+  createdAt DateTime  @default(now())
+  deletedAt DateTime?
+}
+
+model Certificate {
+  id        String    @id @default(ulid())
+  type      MediaType
+  url       String
+  createdAt DateTime  @default(now())
+  deletedAt DateTime?
+}
+
+model Carousel {
+  id        String    @id @default(ulid())
+  name      String
+  link      String
+  mediaUrl       String
+  mediaType      MediaType
+  createdAt DateTime  @default(now())
+  deletedAt DateTime?
+}
+
+model CarTag {
+  carId       String
+  tagId       String
+
+  car         Car       @relation(fields: [carId], references: [id], onDelete: Cascade)
+  tag         Tag       @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([carId, tagId])
+}
+
+model CarPromo {
+  carId       String
+  promoId     String
+
+  car     Car   @relation(fields: [carId], references: [id])
+  promo   Promo @relation(fields: [promoId], references: [id])
+
+  @@id([carId, promoId])
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+}

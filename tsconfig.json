@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "types": ["node"],
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "skipLibCheck": true
+  }
+}
