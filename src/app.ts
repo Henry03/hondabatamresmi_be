@@ -1,7 +1,7 @@
 import express from 'express';
 import routes from './routes';
 import { validateJson } from './middlewares/validateJson';
-import { errorHandler } from './middlewares/ErrorHandler';
+import { errorHandler } from './middlewares/errorHandler';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
