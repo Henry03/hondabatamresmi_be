@@ -7,6 +7,7 @@ import promoRoutes from './promo.routes'
 import commentRoutes from './comment.routes'
 import certificateRoutes from './certificate.routes'
 import carouselRoutes from './carousel.routes'
+import sitemapRoutes from './sitemap.routes'
 import { fileURLToPath } from 'url';
 import path from 'path';
 
@@ -23,6 +24,7 @@ router.use('/promos', promoRoutes);
 router.use('/comments', commentRoutes);
 router.use('/certificates', certificateRoutes);
 router.use('/carousels', carouselRoutes);
+router.use('/', sitemapRoutes);
 router.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')))
 
 
