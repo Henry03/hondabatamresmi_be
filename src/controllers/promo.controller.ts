@@ -278,7 +278,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 
     const file = req.file;
     const type = file.mimetype.startsWith('image') ? 'IMAGE' : 'VIDEO';
-    const url = `${req.protocol}://${req.get('host')}/uploads/${file.filename}`;
+    const url = `${process.env.BASE_URL}/uploads/${file.filename}`;
 
     const newPromo = await prisma.promo.create({
       data: {
@@ -352,7 +352,7 @@ export const update = async (req: Request, res: Response, next: NextFunction) =>
     if(req.file){
       const file = req.file;
       data.mediaType = file.mimetype.startsWith('image') ? 'IMAGE' : 'VIDEO';
-      data.mediaUrl = `${req.protocol}://${req.get('host')}/uploads/${file.filename}`;
+      data.mediaUrl = `${process.env.BASE_URL}/uploads/${file.filename}`;
     }
 
     const car = await prisma.promo.update({
@@ -424,7 +424,7 @@ export const update = async (req: Request, res: Response, next: NextFunction) =>
         req.files.map((file) => {
           const type = file.mimetype.startsWith('image') ? 'IMAGE' : 'VIDEO';
 
-          const url = `${req.protocol}://${req.get('host')}/uploads/${file.filename}`;
+          const url = `${process.env.BASE_URL}/uploads/${file.filename}`;
 
           return prisma.mediaFile.create({
             data: {

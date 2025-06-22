@@ -138,9 +138,8 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
     }
     
     const { name, link } = req.body;
-
     const file = req.file;
-    const mediaUrl = `${req.protocol}://${req.get('host')}/uploads/${file.filename}`;
+    const mediaUrl = `${process.env.BASE_URL}/uploads/${file.filename}`;
     const mediaType = file.mimetype.startsWith('image') ? 'IMAGE' : 'VIDEO';
 
 
@@ -180,7 +179,7 @@ export const update = async (req: Request, res: Response, next: NextFunction) =>
 
     if(req.file){
       const file = req.file;
-      data.mediaUrl = `${req.protocol}://${req.get('host')}/uploads/${file.filename}`;
+      data.mediaUrl = `${process.env.BASE_URL}/uploads/${file.filename}`;
       data.mediaType = file.mimetype.startsWith('image') ? 'IMAGE' : 'VIDEO';
     }
 

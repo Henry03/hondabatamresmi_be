@@ -197,7 +197,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
     const { name, carId, message } = req.body;
 
     const file = req.file;
-    const url = `${req.protocol}://${req.get('host')}/uploads/${file.filename}`;
+    const url = `${process.env.BASE_URL}/uploads/${file.filename}`;
 
     const newComment = await prisma.testimoni.create({
       data: {
@@ -243,7 +243,7 @@ export const update = async (req: Request, res: Response, next: NextFunction) =>
 
     if(req.file){
       const file = req.file;
-      data.imageUrl = `${req.protocol}://${req.get('host')}/uploads/${file.filename}`;
+      data.imageUrl = `${process.env.BASE_URL}/uploads/${file.filename}`;
     }
 
     const comment = await prisma.testimoni.update({

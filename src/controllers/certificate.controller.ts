@@ -60,7 +60,7 @@ export const update = async (req: Request, res: Response, next: NextFunction) =>
         req.files.map((file) => {
           const type = file.mimetype.startsWith('image') ? 'IMAGE' : 'VIDEO';
 
-          const url = `${req.protocol}://${req.get('host')}/uploads/${file.filename}`;
+          const url = `${process.env.BASE_URL}/uploads/${file.filename}`;
 
           return prisma.certificate.create({
             data: {
